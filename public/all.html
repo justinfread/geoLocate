@@ -1,0 +1,47 @@
+<!--
+  This page sends a request to the server to retrieve all the data and 
+  displays it on the page
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Geolocation</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="all.html"></a>All</li>
+      </ul>
+    </nav>
+    
+    <script>
+      // Set up a route to retrieve all the data from the server, and list it on the webpage
+      async function getData() {
+        const response = await fetch('/all');
+        const data = await response.json();
+        for(item of data) {
+          const root = document.createElement('div');
+          const mood = document.createElement('div');
+          const geo = document.createElement('div');
+          const date = document.createElement('div');
+
+          mood.textContent = item.mood;
+          geo.textContent = item.lat + " " + item.lon;
+          const dateString = new Date(item.timeStamp).toLocaleString();
+          date.textContent = dateString;
+
+          root.append(mood, geo, date);
+          document.body.append(root);
+        }
+      }
+      
+      // arbitrarily execute getData() to prove the point
+      getData();
+    </script>
+  </body>
+</html>

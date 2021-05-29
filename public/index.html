@@ -1,0 +1,67 @@
+<!--
+  This page allows the user to type a word into an input field, and send it to the server
+  The server then geoLocates the client, saves the data to the database and responds back
+  to the client
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Geolocation</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="all.html">All</a></li>
+      </ul>
+    </nav>
+    <h1>Data Selfie App</h1>
+    <p>
+      Latitude: <span id="latitude"></span><br/>
+      Longitude: <span id="longitude"></span>
+    </p>
+    <label for="Word">Enter your mood</label>
+    <input id="word" value="">
+    <button onclick="getPostLocation()">Submit</button>  
+
+    <script>
+      // Test to see if geolocation is available
+      if('geolocation' in navigator) {
+        console.log("geolocation is available"); 
+        // Get the current position, add coords to span elements and console log them
+        function getPostLocation() {
+          navigator.geolocation.getCurrentPosition(async position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const timeStamp = Date.now();
+            const mood = document.getElementById("word").value;
+            
+            document.getElementById("latitude").textContent = lat;
+            document.getElementById("longitude").textContent = lon;
+
+            // Wrap the data that needs to be sent to the server in an object
+            const data = {lat, lon, timeStamp, word};
+            // Create an options object for the second parameter of the fetch function
+            const options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+                body: JSON.stringify(data)
+            };
+            // Send the fetch/post request with the options object to the server and get the response
+            const response = await fetch('/api', options);
+            const dataFromServer = await response.json();
+            console.log(dataFromServer);
+          });
+        }
+      } else {
+        console.log("geolocation IS NOT available");
+      }
+    </script>
+  </body>
+</html>
