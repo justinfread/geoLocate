@@ -6,7 +6,7 @@
   Uses Geolocation API https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API#the_geolocation_object
   Fine for examples but a more robust database may be required
   for actual projects. Using NeDB is good practice for mongo.
-  Project based off of Dan Shieffman's tutorial serries Working with Data and APIs in JavaScript https://www.youtube.com/playlist?list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X
+  Project based off of Dan Shiffman's tutorial serries Working with Data and APIs in JavaScript https://www.youtube.com/playlist?list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X
 */ 
 
 // Include the dependencies from package.json
